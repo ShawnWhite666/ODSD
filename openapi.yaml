@@ -1,0 +1,87 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: Lottery API
+    version: 0.0.1
+paths:
+    /lottery:
+        post:
+            tags:
+                - Lottery
+            operationId: Lottery_LotteryV1
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.lottery.v1.LotteryReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.lottery.v1.LotteryRsp'
+components:
+    schemas:
+        api.lottery.v1.CommonRspInfo:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                msg:
+                    type: string
+        api.lottery.v1.LotteryPrizeInfo:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                title:
+                    type: string
+                prizeNum:
+                    type: integer
+                    format: int32
+                leftNum:
+                    type: integer
+                    format: int32
+                prizeCodeLow:
+                    type: integer
+                    format: int32
+                prizeCodeHigh:
+                    type: integer
+                    format: int32
+                img:
+                    type: string
+                displayOrder:
+                    type: integer
+                    format: uint32
+                prizeType:
+                    type: integer
+                    format: uint32
+                prizeProfile:
+                    type: string
+                couponCode:
+                    type: string
+        api.lottery.v1.LotteryReq:
+            type: object
+            properties:
+                userId:
+                    type: integer
+                    format: uint32
+                userName:
+                    type: string
+                ip:
+                    type: string
+        api.lottery.v1.LotteryRsp:
+            type: object
+            properties:
+                commonRsp:
+                    $ref: '#/components/schemas/api.lottery.v1.CommonRspInfo'
+                prizeInfo:
+                    $ref: '#/components/schemas/api.lottery.v1.LotteryPrizeInfo'
+tags:
+    - name: Lottery

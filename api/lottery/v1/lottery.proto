@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package api.lottery.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/bitstormhub/bitstorm/lotterysvr/api/lottery/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.lottery.v1";
+
+service Lottery {
+  rpc LotteryV1 (LotteryReq) returns (LotteryRsp){
+    option (google.api.http) = {
+      post: "/lottery",
+      body: "*"
+    };
+  }
+}
+
+message CommonRspInfo {
+  int32 code = 1;
+  string msg = 2;
+}
+
+message LotteryReq {
+  uint32 user_id = 1;
+  string user_name = 2;
+  string ip = 3;
+}
+
+message LotteryPrizeInfo {
+  uint32 id = 1;
+  string title = 2;
+  int32 prize_num = 3;
+  int32 left_num = 4;
+  int32 prize_code_low = 5;
+  int32 prize_code_high = 6;
+  string img = 7;
+  uint32 display_order = 8;
+  uint32 prize_type = 9;
+  string prize_profile = 10;
+  string coupon_code = 11;  // 如果中奖奖品是优惠券，这个字段位优惠券编码，否则为空
+}
+
+message LotteryRsp {
+  CommonRspInfo common_rsp = 1;
+  LotteryPrizeInfo prize_info = 2;
+}
+

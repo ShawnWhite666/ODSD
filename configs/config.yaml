@@ -1,0 +1,57 @@
+server:
+  http:
+    addr: 0.0.0.0:10080
+    timeout: 1s
+  grpc:
+    addr: 0.0.0.0:10081
+    timeout: 1s
+  task:
+    addr:
+    tasks:
+      - name: job1
+        type: "once"
+        #schedule: "5s" # "5s" "5m" "5h" "5h5m5s"
+      - name: job2
+        type: "once"
+      - name: job3
+        type: "once"
+      - name: job4
+        type: "once"
+#      - name: job2
+#        type: "cron"
+#        schedule: "@every 5s"
+  #        schedule: "*/5 * * * *"
+
+data:
+  database:
+    addr: 192.168.5.51:3306
+    user: root
+    password: "123456"
+    database: lottery_system
+    max_idle_conn : 2000
+    max_open_conn: 20000
+    max_idle_time: 30
+    slow_threshold_millisecond: 10 # SQL执行超过10ms，就算慢sql
+
+  redis:
+    addr: 192.168.5.52:6379
+    password: "123456"
+    db: 8
+    pool_size: 20
+    read_timeout: 2s
+    write_timeout: 2s
+
+micro:
+  lb:
+    addr:
+      - "192.168.5.51:20000"
+      - "192.168.5.51:20002"
+      - "192.168.5.51:20004"
+
+log:
+  level: info
+  log_path: ./log
+  max_size: 100 # 日志保留大小，以 M 为单位
+  max_backups: 3 # 保留文件个数
+  console: false # false为不打印到终端
+  filename: lotterysvr.log

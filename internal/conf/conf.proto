@@ -1,0 +1,80 @@
+syntax = "proto3";
+package kratos.api;
+
+option go_package = "./;conf";
+
+import "google/protobuf/duration.proto";
+
+message Bootstrap {
+  Server server = 1;
+  Data data = 2;
+  Micro micro = 3;
+  Log log = 4;
+}
+
+message Server {
+  message HTTP {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+  }
+  message GRPC {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+  }
+  message TASK {
+    string addr = 1;
+    repeated Task tasks = 2;
+  }
+  HTTP http = 1;
+  GRPC grpc = 2;
+  TASK task = 3;
+}
+
+message Data {
+  message Database {
+    string   addr          = 1;
+    string   user          = 2;
+    string   password      = 3;
+    string   database      = 4;
+    int32    max_idle_conn = 5;
+    int32    max_open_conn = 6;
+    int32    max_idle_time = 7;
+    int64 slow_threshold_millisecond = 8;
+  }
+  message Redis {
+    string addr       = 1;
+    string password = 2;
+    int32 db = 3;
+    int32 pool_size = 4;
+  }
+  Database database = 1;
+  Redis redis = 2;
+}
+
+message Micro {
+  message LB {
+    repeated string addr = 1;
+  }
+  message RPC {
+  }
+  LB lb = 1;
+  RPC rpc = 2;
+}
+
+message Log {
+  bool console = 1;
+  int64 max_size = 2;
+  int64 max_backups = 3;
+  string level = 4;
+  string log_path = 5;
+  string filename = 6;
+}
+
+
+message Task {
+  string name = 1;
+  string type = 2;
+  string schedule = 3;
+}
